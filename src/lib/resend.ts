@@ -1,12 +1,22 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY no está configurada");
+  }
+  return new Resend(apiKey);
+}
 
 export async function sendPasswordResetEmail(
   email: string,
   token: string
 ) {
-  const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
+  const baseUrl = process.env.NEXTAUTH_URL
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  const resetUrl = `${baseUrl}/reset-password?token=${token}`;
+
+  const resend = getResendClient();
 
   await resend.emails.send({
     from: "BTF Banco <onboarding@resend.dev>",
