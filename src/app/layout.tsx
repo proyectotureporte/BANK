@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BTF - Banco Tesis Final",
-  description: "Sistema bancario BTF - Banco Tesis Final",
+  title: "Ocean Bank",
+  description: "Sistema bancario Ocean Bank",
 };
 
 export default function RootLayout({

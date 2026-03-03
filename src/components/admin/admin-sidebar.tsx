@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { BTFLogo } from "@/components/auth/btf-logo";
+import { OceanLogo } from "@/components/auth/ocean-logo";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
@@ -26,7 +26,7 @@ export function AdminSidebar() {
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 items-center justify-center border-b border-sidebar-border">
-        <BTFLogo size="sm" />
+        <OceanLogo size="sm" />
       </div>
       <div className="flex items-center gap-2 px-4 py-2 border-b border-sidebar-border">
         <Shield className="h-4 w-4 text-yellow-400" />

@@ -19,12 +19,12 @@ export async function sendPasswordResetEmail(
   const resend = getResendClient();
 
   await resend.emails.send({
-    from: "BTF Banco <onboarding@resend.dev>",
+    from: "Ocean Bank <onboarding@resend.dev>",
     to: email,
-    subject: "Restablecer contraseña - BTF Banco",
+    subject: "Restablecer contraseña - Ocean Bank",
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #1e3a5f;">BTF - Banco Tesis Final</h1>
+        <h1 style="color: #1e3a5f;">Ocean Bank</h1>
         <p>Has solicitado restablecer tu contraseña.</p>
         <p>Haz clic en el siguiente enlace para crear una nueva contraseña:</p>
         <a href="${resetUrl}" style="display: inline-block; background: #1e3a5f; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">

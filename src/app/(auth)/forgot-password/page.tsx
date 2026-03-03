@@ -8,7 +8,7 @@ import {
   forgotPasswordSchema,
   type ForgotPasswordInput,
 } from "@/lib/validations";
-import { BTFLogo } from "@/components/auth/btf-logo";
+import { OceanLogo } from "@/components/auth/ocean-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
     return (
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-4">
-          <BTFLogo size="md" />
+          <OceanLogo size="md" />
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <CheckCircle className="mx-auto h-12 w-12 text-green-500" />
@@ -91,7 +91,7 @@ export default function ForgotPasswordPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center space-y-4 pb-2">
-        <BTFLogo size="md" />
+        <OceanLogo size="md" />
         <p className="text-sm text-muted-foreground">
           Ingresa tu email para restablecer tu contraseña
         </p>

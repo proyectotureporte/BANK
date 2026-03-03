@@ -1,11 +1,11 @@
 /**
- * Seed script for BTF - Banco Tesis Final
+ * Seed script for Ocean Bank
  *
  * Run with: npx tsx scripts/seed.ts
  *
  * Creates:
- * - Admin user (admin@btf.com / admin123)
- * - Demo client (cliente@btf.com / cliente123)
+ * - Admin user (admin@oceanbank.com / admin123)
+ * - Demo client (cliente@oceanbank.com / cliente123)
  * - Account for demo client with $5,000 balance
  */
 
@@ -24,7 +24,7 @@ const client = createClient({
 });
 
 async function seed() {
-  console.log("Seeding BTF database...\n");
+  console.log("Seeding Ocean Bank database...\n");
 
   // Hash passwords
   const adminPass = await bcrypt.hash("admin123", 12);
@@ -34,8 +34,8 @@ async function seed() {
   const admin = await client.createOrReplace({
     _id: "user-admin",
     _type: "user",
-    name: "Administrador BTF",
-    email: "admin@btf.com",
+    name: "Administrador Ocean Bank",
+    email: "admin@oceanbank.com",
     password: adminPass,
     role: "admin",
   });
@@ -46,7 +46,7 @@ async function seed() {
     _id: "user-demo-client",
     _type: "user",
     name: "Juan Pérez",
-    email: "cliente@btf.com",
+    email: "cliente@oceanbank.com",
     password: clientPass,
     role: "client",
   });
@@ -56,7 +56,7 @@ async function seed() {
   const account = await client.createOrReplace({
     _id: "account-demo",
     _type: "account",
-    accountNumber: "BTF-001-0001",
+    accountNumber: "OCN-001-0001",
     owner: { _type: "reference", _ref: "user-demo-client" },
     balance: 5000,
     currency: "USD",
@@ -65,8 +65,8 @@ async function seed() {
   console.log("Account created:", account.accountNumber, "Balance: $5,000\n");
 
   console.log("=== Seed complete! ===");
-  console.log("Admin login:  admin@btf.com / admin123");
-  console.log("Client login: cliente@btf.com / cliente123");
+  console.log("Admin login:  admin@oceanbank.com / admin123");
+  console.log("Client login: cliente@oceanbank.com / cliente123");
 }
 
 seed().catch((err) => {
