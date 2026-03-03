@@ -13,7 +13,7 @@ export function BTFLogo({ size = "lg" }: { size?: "sm" | "md" | "lg" }) {
         BTF
       </div>
       <div className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
-        Banco Tesis Final
+        Ocean Bank
       </div>
     </div>
   );
