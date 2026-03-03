@@ -8,6 +8,7 @@ export default auth((req) => {
   const mustChangePassword = req.auth?.user?.mustChangePassword;
 
   const isAuthPage =
+    pathname === "/" ||
     pathname.startsWith("/login") ||
     pathname.startsWith("/forgot-password") ||
     pathname.startsWith("/reset-password");
