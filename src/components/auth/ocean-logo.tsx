@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export function OceanLogo({ size = "lg" }: { size?: "sm" | "md" | "lg" }) {
   const dimensions = {
-    sm: { width: 80, height: 80 },
-    md: { width: 120, height: 120 },
-    lg: { width: 160, height: 160 },
+    sm: { width: 160, height: 160 },
+    md: { width: 240, height: 240 },
+    lg: { width: 320, height: 320 },
   };
 
   const { width, height } = dimensions[size];
