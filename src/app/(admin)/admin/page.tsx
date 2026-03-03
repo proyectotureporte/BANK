@@ -31,7 +31,7 @@ export default async function AdminOverviewPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Panel de Administración</h1>
+      <h1 className="text-xl md:text-2xl font-bold">Panel de Administración</h1>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>

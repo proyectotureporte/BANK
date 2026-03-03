@@ -96,7 +96,7 @@ export default function ClientDetailPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Detalle de Cliente</h1>
+      <h1 className="text-xl md:text-2xl font-bold">Detalle de Cliente</h1>
 
       <Card>
         <CardHeader>

@@ -20,11 +20,11 @@ const navItems = [
   { href: "/admin/transactions", label: "Transacciones", icon: ArrowLeftRight },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebarContent() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r bg-sidebar text-sidebar-foreground">
+    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 items-center justify-center border-b border-sidebar-border">
         <OceanLogo size="sm" />
       </div>
@@ -61,6 +61,14 @@ export function AdminSidebar() {
           Cerrar Sesión
         </Button>
       </div>
+    </div>
+  );
+}
+
+export function AdminSidebar() {
+  return (
+    <aside className="hidden md:flex h-screen w-64 flex-col border-r">
+      <AdminSidebarContent />
     </aside>
   );
 }

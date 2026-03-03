@@ -19,11 +19,11 @@ const navItems = [
   { href: "/profile", label: "Perfil", icon: User },
 ];
 
-export function DashboardSidebar() {
+export function DashboardSidebarContent() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r bg-sidebar text-sidebar-foreground">
+    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 items-center justify-center border-b border-sidebar-border">
         <OceanLogo size="sm" />
       </div>
@@ -54,6 +54,14 @@ export function DashboardSidebar() {
           Cerrar Sesión
         </Button>
       </div>
+    </div>
+  );
+}
+
+export function DashboardSidebar() {
+  return (
+    <aside className="hidden md:flex h-screen w-64 flex-col border-r">
+      <DashboardSidebarContent />
     </aside>
   );
 }

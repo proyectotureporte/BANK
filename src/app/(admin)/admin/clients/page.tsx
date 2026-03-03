@@ -46,8 +46,8 @@ export default function AdminClientsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Gestión de Clientes</h1>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-xl md:text-2xl font-bold">Gestión de Clientes</h1>
         <CreateClientDialog onSuccess={fetchClients} />
       </div>
 
@@ -65,52 +65,94 @@ export default function AdminClientsPage() {
               No hay clientes registrados
             </p>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nombre</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Rol</TableHead>
-                  <TableHead>Cuentas</TableHead>
-                  <TableHead>Balance Total</TableHead>
-                  <TableHead>Acciones</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <>
+              {/* Mobile card view */}
+              <div className="space-y-3 md:hidden">
                 {clients.map((client: any) => (
-                  <TableRow key={client._id}>
-                    <TableCell className="font-medium">
-                      {client.name}
-                    </TableCell>
-                    <TableCell>{client.email}</TableCell>
-                    <TableCell>
+                  <div
+                    key={client._id}
+                    className="rounded-lg border p-4 space-y-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium">{client.name}</p>
                       <Badge
-                        variant={
-                          client.role === "admin" ? "default" : "secondary"
-                        }
+                        variant={client.role === "admin" ? "default" : "secondary"}
                         className="capitalize"
                       >
                         {client.role}
                       </Badge>
-                    </TableCell>
-                    <TableCell>{client.accountCount || 0}</TableCell>
-                    <TableCell>
-                      ${(client.totalBalance || 0).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      <Link href={`/admin/clients/${client._id}`}>
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4 mr-1" />
-                          Ver
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{client.email}</p>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {client.accountCount || 0} cuenta(s)
+                      </span>
+                      <span className="font-semibold">
+                        ${(client.totalBalance || 0).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                        })}
+                      </span>
+                    </div>
+                    <Link href={`/admin/clients/${client._id}`}>
+                      <Button variant="outline" size="sm" className="w-full">
+                        <Eye className="h-4 w-4 mr-1" />
+                        Ver Cliente
+                      </Button>
+                    </Link>
+                  </div>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+
+              {/* Desktop table view */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Nombre</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Rol</TableHead>
+                      <TableHead>Cuentas</TableHead>
+                      <TableHead>Balance Total</TableHead>
+                      <TableHead>Acciones</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {clients.map((client: any) => (
+                      <TableRow key={client._id}>
+                        <TableCell className="font-medium">
+                          {client.name}
+                        </TableCell>
+                        <TableCell>{client.email}</TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              client.role === "admin" ? "default" : "secondary"
+                            }
+                            className="capitalize"
+                          >
+                            {client.role}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{client.accountCount || 0}</TableCell>
+                        <TableCell>
+                          ${(client.totalBalance || 0).toLocaleString("en-US", {
+                            minimumFractionDigits: 2,
+                          })}
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/admin/clients/${client._id}`}>
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4 mr-1" />
+                              Ver
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>
