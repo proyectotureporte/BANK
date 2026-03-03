@@ -46,15 +46,15 @@ export default function LoginPage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.png"
-          alt="BTF Bank"
-          className="w-[220px] h-[45px] sm:w-[200px] sm:h-[50px] lg:w-[250px] lg:h-[50px]"
+          alt="Ocean Bank"
+          className="w-[180px] h-[45px] sm:w-[200px] sm:h-[50px] lg:w-[200px] lg:h-[50px]"
         />
       </div>
 
       {/* Form centered */}
       <div className="w-full max-w-sm sm:max-w-md">
         <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight text-white lg:text-gray-900 mb-1 sm:mb-2">
-          Bienvenido a Ocean bank
+          Bienvenido a Ocean Bank
         </h1>
         <p className="text-base sm:text-lg text-white/70 lg:text-gray-400 mb-6 sm:mb-10">
           Ingresa a tu cuenta
