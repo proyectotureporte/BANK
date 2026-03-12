@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import crypto from "crypto";
+import bcrypt from "bcryptjs";
 import { getUserByEmail } from "@/sanity/queries";
 import { updateUser } from "@/sanity/mutations";
-import { sendPasswordResetEmail } from "@/lib/resend";
 import { forgotPasswordSchema } from "@/lib/validations";
 
 export async function POST(req: Request) {
@@ -12,27 +11,29 @@ export async function POST(req: Request) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: "Email inválido" },
+        { error: parsed.error.issues[0]?.message || "Datos inválidos" },
         { status: 400 }
       );
     }
 
     const user = await getUserByEmail(parsed.data.email);
 
-    // Always return success to prevent email enumeration
     if (!user) {
-      return NextResponse.json({ message: "Si el email existe, recibirás un enlace" });
+      return NextResponse.json(
+        { error: "No se encontró una cuenta con ese email" },
+        { status: 404 }
+      );
     }
 
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    const resetTokenExpiry = new Date(
-      Date.now() + 60 * 60 * 1000
-    ).toISOString();
+    const hashedPassword = await bcrypt.hash(parsed.data.password, 12);
 
-    await updateUser(user._id, { resetToken, resetTokenExpiry });
-    await sendPasswordResetEmail(parsed.data.email, resetToken);
+    await updateUser(user._id, {
+      password: hashedPassword,
+      resetToken: "",
+      resetTokenExpiry: "",
+    });
 
-    return NextResponse.json({ message: "Si el email existe, recibirás un enlace" });
+    return NextResponse.json({ message: "Contraseña restablecida exitosamente" });
   } catch {
     return NextResponse.json(
       { error: "Error interno del servidor" },

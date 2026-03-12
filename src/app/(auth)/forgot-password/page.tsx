@@ -29,12 +29,12 @@ import { Loader2, ArrowLeft, CheckCircle } from "lucide-react";
 
 export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
   const form = useForm<ForgotPasswordInput>({
     resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: { email: "" },
+    defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
   async function onSubmit(data: ForgotPasswordInput) {
@@ -48,20 +48,23 @@ export default function ForgotPasswordPage() {
         body: JSON.stringify(data),
       });
 
+      const body = await res.json();
+
       if (!res.ok) {
-        const body = await res.json();
-        throw new Error(body.error || "Error al enviar el correo");
+        throw new Error(body.error || "Error al restablecer la contraseña");
       }
 
-      setSent(true);
-    } catch (err: any) {
-      setError(err.message);
+      setSuccess(true);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Error al restablecer la contraseña";
+      setError(message);
     } finally {
       setLoading(false);
     }
   }
 
-  if (sent) {
+  if (success) {
     return (
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-4">
@@ -69,10 +72,10 @@ export default function ForgotPasswordPage() {
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <CheckCircle className="mx-auto h-12 w-12 text-green-500" />
-          <h2 className="text-lg font-semibold">Correo enviado</h2>
+          <h2 className="text-lg font-semibold">Contraseña restablecida</h2>
           <p className="text-sm text-muted-foreground">
-            Si el email existe en nuestro sistema, recibirás un enlace para
-            restablecer tu contraseña.
+            Tu contraseña ha sido actualizada exitosamente. Ya puedes iniciar
+            sesión con tu nueva contraseña.
           </p>
         </CardContent>
         <CardFooter className="justify-center">
@@ -81,7 +84,7 @@ export default function ForgotPasswordPage() {
             className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
           >
             <ArrowLeft className="h-4 w-4" />
-            Volver al inicio de sesión
+            Ir a iniciar sesión
           </Link>
         </CardFooter>
       </Card>
@@ -93,7 +96,7 @@ export default function ForgotPasswordPage() {
       <CardHeader className="text-center space-y-4 pb-2">
         <OceanLogo size="md" />
         <p className="text-sm text-muted-foreground">
-          Ingresa tu email para restablecer tu contraseña
+          Ingresa tu email y tu nueva contraseña
         </p>
       </CardHeader>
       <CardContent>
@@ -121,9 +124,43 @@ export default function ForgotPasswordPage() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nueva contraseña</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Mínimo 6 caracteres"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirmar contraseña</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Repite tu nueva contraseña"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit" className="w-full" disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Enviar enlace
+              Restablecer contraseña
             </Button>
           </form>
         </Form>
