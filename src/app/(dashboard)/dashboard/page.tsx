@@ -50,12 +50,12 @@ export default async function DashboardPage() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold text-gray-700">
               ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
             </div>
-            <p className="text-xs text-muted-foreground">
-              {accounts?.length || 0} cuenta(s)
-            </p>
+           <p className="text-xs text-muted-foreground">
+  Conversión de cripto en curso
+</p>
           </CardContent>
         </Card>
 
