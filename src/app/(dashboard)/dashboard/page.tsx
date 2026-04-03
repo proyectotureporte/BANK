@@ -41,10 +41,10 @@ export default async function DashboardPage() {
         <TransferDialog refreshMode="router" transactions={allTransactions} />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3 text-gray-700">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-gray-700">
               Balance Total
             </CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -53,7 +53,7 @@ export default async function DashboardPage() {
             <div className="text-2xl font-bold text-gray-700">
               ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
             </div>
-           <p className="text-xs text-muted-foreground">
+           <p className="text-2xl text-muted-foreground">
   Conversión de cripto en curso
 </p>
           </CardContent>
