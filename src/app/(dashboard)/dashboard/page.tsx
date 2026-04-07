@@ -47,12 +47,16 @@ export default async function DashboardPage() {
             <CardTitle className="text-sm font-medium text-gray-700">
               Balance Total
             </CardTitle>
-            <Bitcoin className="h-4 w-4 text-muted-foreground" />
+            <Bitcoin className="h-7 w-7 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-gray-500">
-              {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-            </div>
+             <span className="text-2xl font-bold text-gray-500">
+        {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+      </span>
+
+      <span className="text-lg font-semibold text-gray-400">BTC</span>
+    </div>
            <p className="text-xl text-muted-foreground">
   Conversión de cripto en curso
 </p>
