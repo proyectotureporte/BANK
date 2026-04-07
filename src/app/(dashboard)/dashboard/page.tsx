@@ -57,9 +57,6 @@ export default async function DashboardPage() {
 
       <span className="text-lg font-semibold text-gray-400"> BTC</span>
     </div>
-           <p className="text-xl text-muted-foreground">
-  Conversión de cripto en curso
-</p>
           </CardContent>
         </Card>
 
