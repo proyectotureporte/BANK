@@ -55,7 +55,7 @@ export default async function DashboardPage() {
         {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
       </span>
 
-      <span className="text-lg font-semibold text-gray-400">BTC</span>
+      <span className="text-lg font-semibold text-gray-400"> BTC</span>
     </div>
            <p className="text-xl text-muted-foreground">
   Conversión de cripto en curso
