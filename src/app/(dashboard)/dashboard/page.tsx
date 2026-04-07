@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DollarSign, ArrowUpRight, Clock } from "lucide-react";
+import { Bitcoin, ArrowUpRight, Clock } from "lucide-react";
 import { TransferDialog } from "@/components/dashboard/transfer-dialog";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 
@@ -47,11 +47,11 @@ export default async function DashboardPage() {
             <CardTitle className="text-sm font-medium text-gray-700">
               Balance Total
             </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <Bitcoin className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-gray-500">
-              ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
             </div>
            <p className="text-xl text-muted-foreground">
   Conversión de cripto en curso
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
               {primaryAccount?.accountNumber || "N/A"}
             </div>
             <p className="text-xs text-muted-foreground">
-              {primaryAccount?.currency || "USD"}
+              {primaryAccount?.currency || "BTC"}
             </p>
           </CardContent>
         </Card>
