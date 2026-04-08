@@ -81,7 +81,7 @@ export function TransactionDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto p-6">
         <DialogHeader>
           <DialogTitle>Detalle de Transacción</DialogTitle>
         </DialogHeader>
@@ -90,7 +90,7 @@ export function TransactionDetailDialog({
           <DetailRow label="Tipo" value={tx.type === "transfer" ? "Transferencia" : tx.type === "deposit" ? "Depósito" : "Retiro"} />
           <DetailRow
             label="Monto"
-            value={`$${tx.amount?.toLocaleString("en-US", { minimumFractionDigits: 2 })}`}
+            value={`₿ ${tx.amount?.toLocaleString("en-US", { minimumFractionDigits: 8 })}`}
           />
           <div className="flex justify-between py-1.5">
             <span className="text-sm text-muted-foreground">Estado</span>
