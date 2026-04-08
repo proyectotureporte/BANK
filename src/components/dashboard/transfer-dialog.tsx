@@ -109,7 +109,7 @@ export function TransferDialog({ onSuccess, refreshMode, transactions: externalT
           description: form.description || undefined,
           beneficiaryName: walletLabel ?? form.walletAddress,
           network: detectedNetwork || "Bitcoin",
-          transferType: "crypto",
+          transferType: "internacional",
         }),
       });
 
