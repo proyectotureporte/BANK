@@ -172,10 +172,7 @@ export function TransferDialog({ onSuccess, refreshMode, transactions: externalT
       }}
     >
      <DialogTrigger asChild>
-  <Button
-    disabled
-    className="bg-gray-400 hover:bg-gray-400 text-white cursor-not-allowed"
-  >
+  <Button>
     <Plus className="mr-2 h-4 w-4" />
     Nueva Transferencia
   </Button>
