@@ -234,7 +234,7 @@ export function TransferDialog({ onSuccess, refreshMode, transactions: externalT
 
               {/* Monto con botón Max */}
               <div className="space-y-2">
-                <Label>Monto ($)</Label>
+                <Label>Monto (₿)</Label>
                 <div className="flex gap-2">
                   <Input
                     type="number"
