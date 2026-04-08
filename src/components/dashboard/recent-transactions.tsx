@@ -46,7 +46,7 @@ export function RecentTransactions({ transactions }: { transactions: any[] }) {
                 <span className="capitalize text-sm font-medium">{tx.type}</span>
               </div>
               <span className="font-semibold">
-                ${tx.amount?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                ₿{tx.amount?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
               </span>
             </div>
             <p className="text-sm text-muted-foreground">{tx.description || "-"}</p>
@@ -92,7 +92,7 @@ export function RecentTransactions({ transactions }: { transactions: any[] }) {
                 </TableCell>
                 <TableCell>{tx.description || "-"}</TableCell>
                 <TableCell className="font-medium">
-                  ${tx.amount?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  ₿{tx.amount?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                 </TableCell>
                 <TableCell>
                   <Badge variant={getStatusBadgeVariant(tx.status)}>
