@@ -44,14 +44,14 @@ export default async function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-3 text-gray-700">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-700">
+            <CardTitle className="text-sm font-medium text-black">
               Balance Total
             </CardTitle>
             <Bitcoin className="h-7 w-7 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-black">
-             <span className="text-2xl font-bold text-gray-500">
+             <span className="text-2xl font-bold text-black">
         {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
       </span>
 
