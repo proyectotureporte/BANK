@@ -50,12 +50,12 @@ export default async function DashboardPage() {
             <Bitcoin className="h-7 w-7 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-500">
+            <div className="text-2xl font-bold text-black">
              <span className="text-2xl font-bold text-gray-500">
         {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
       </span>
 
-      <span className="text-lg font-semibold text-gray-400"> BTC</span>
+      <span className="text-lg font-semibold text-black"> BTC</span>
     </div>
           </CardContent>
         </Card>
