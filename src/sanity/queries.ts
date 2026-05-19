@@ -23,7 +23,7 @@ export async function getUserById(id: string): Promise<SanityResult> {
 export async function getAccountsByUser(userId: string): Promise<SanityResult> {
   return sanityClient.fetch(
     `*[_type == "account" && owner._ref == $userId]{
-      _id, accountNumber, balance, currency, createdAt,
+      _id, accountNumber, balance, currency, status, createdAt,
       "ownerName": owner->name
     }`,
     { userId } as any
@@ -33,7 +33,7 @@ export async function getAccountsByUser(userId: string): Promise<SanityResult> {
 export async function getAccountById(id: string): Promise<SanityResult> {
   return sanityClient.fetch(
     `*[_type == "account" && _id == $id][0]{
-      _id, accountNumber, balance, currency, createdAt,
+      _id, accountNumber, balance, currency, status, createdAt,
       "owner": owner->{_id, name, email}
     }`,
     { id } as any
@@ -43,7 +43,7 @@ export async function getAccountById(id: string): Promise<SanityResult> {
 export async function getAccountByNumber(accountNumber: string): Promise<SanityResult> {
   return sanityClient.fetch(
     `*[_type == "account" && accountNumber == $accountNumber][0]{
-      _id, accountNumber, balance, currency,
+      _id, accountNumber, balance, currency, status,
       "owner": owner->{_id, name, email}
     }`,
     { accountNumber } as any
@@ -76,7 +76,7 @@ export async function getAllUsers(): Promise<SanityResult> {
 export async function getAllAccounts(): Promise<SanityResult> {
   return sanityClient.fetch(
     `*[_type == "account"] | order(createdAt desc) {
-      _id, accountNumber, balance, currency, createdAt,
+      _id, accountNumber, balance, currency, status, createdAt,
       "owner": owner->{_id, name, email}
     }`
   );

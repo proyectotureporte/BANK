@@ -13,8 +13,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Loader2, User, Mail, CreditCard, Save } from "lucide-react";
 import { toast } from "sonner";
+import { AccountStatusTimeline } from "@/components/dashboard/account-status-timeline";
+
+const STATUS_OPTIONS = [
+  { value: "pending", label: "Pendiente" },
+  { value: "approved", label: "Aprobada" },
+  { value: "validation_pending", label: "Validación Pendiente" },
+  { value: "completed", label: "Completada" },
+];
 
 export default function ClientDetailPage() {
   const params = useParams();
@@ -24,6 +39,7 @@ export default function ClientDetailPage() {
   const [loading, setLoading] = useState(true);
   const [balanceEdits, setBalanceEdits] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState<string | null>(null);
+  const [statusSaving, setStatusSaving] = useState<string | null>(null);
 
   async function fetchClient() {
     try {
@@ -43,6 +59,31 @@ export default function ClientDetailPage() {
   useEffect(() => {
     fetchClient();
   }, [clientId]);
+
+  async function handleUpdateStatus(accountId: string, status: string) {
+    setStatusSaving(accountId);
+    setAccounts((prev) =>
+      prev.map((a) => (a._id === accountId ? { ...a, status } : a))
+    );
+    try {
+      const res = await fetch("/api/admin/accounts", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountId, status }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Error al actualizar estado");
+      }
+      toast.success("Estado actualizado");
+      fetchClient();
+    } catch (err: any) {
+      toast.error(err.message);
+      fetchClient();
+    } finally {
+      setStatusSaving(null);
+    }
+  }
 
   async function handleUpdateBalance(accountId: string) {
     const newBalance = parseFloat(balanceEdits[accountId]);
@@ -144,49 +185,86 @@ export default function ClientDetailPage() {
               {accounts.map((acc: any) => (
                 <div
                   key={acc._id}
-                  className="flex flex-col gap-3 rounded-lg border p-4 sm:flex-row sm:items-center sm:justify-between"
+                  className="space-y-4 rounded-lg border p-4"
                 >
-                  <div className="flex items-center gap-3">
-                    <CreditCard className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">{acc.accountNumber}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Balance actual: $
-                        {acc.balance?.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                        })}
-                      </p>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-3">
+                      <CreditCard className="h-5 w-5 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">{acc.accountNumber}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Balance actual: $
+                          {acc.balance?.toLocaleString("en-US", {
+                            minimumFractionDigits: 2,
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Label className="sr-only">Nuevo balance</Label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="Nuevo balance"
+                        className="w-40"
+                        value={balanceEdits[acc._id] ?? ""}
+                        onChange={(e) =>
+                          setBalanceEdits((prev) => ({
+                            ...prev,
+                            [acc._id]: e.target.value,
+                          }))
+                        }
+                      />
+                      <Button
+                        size="sm"
+                        disabled={
+                          saving === acc._id || !balanceEdits[acc._id]
+                        }
+                        onClick={() => handleUpdateBalance(acc._id)}
+                      >
+                        {saving === acc._id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Save className="h-4 w-4" />
+                        )}
+                      </Button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Label className="sr-only">Nuevo balance</Label>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      placeholder="Nuevo balance"
-                      className="w-40"
-                      value={balanceEdits[acc._id] ?? ""}
-                      onChange={(e) =>
-                        setBalanceEdits((prev) => ({
-                          ...prev,
-                          [acc._id]: e.target.value,
-                        }))
-                      }
+
+                  <Separator />
+
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-1">
+                      <Label className="text-xs text-muted-foreground">
+                        Estado de la cuenta
+                      </Label>
+                      <Select
+                        value={acc.status || "validation_pending"}
+                        onValueChange={(v) => handleUpdateStatus(acc._id, v)}
+                        disabled={statusSaving === acc._id}
+                      >
+                        <SelectTrigger className="w-full sm:w-64">
+                          <SelectValue placeholder="Selecciona un estado" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {STATUS_OPTIONS.map((opt) => (
+                            <SelectItem key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    {statusSaving === acc._id && (
+                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    )}
+                  </div>
+
+                  <div className="pt-2">
+                    <AccountStatusTimeline
+                      status={acc.status ?? "validation_pending"}
                     />
-                    <Button
-                      size="sm"
-                      disabled={
-                        saving === acc._id || !balanceEdits[acc._id]
-                      }
-                      onClick={() => handleUpdateBalance(acc._id)}
-                    >
-                      {saving === acc._id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Save className="h-4 w-4" />
-                      )}
-                    </Button>
                   </div>
                 </div>
               ))}

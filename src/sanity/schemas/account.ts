@@ -30,6 +30,20 @@ const account = {
       initialValue: "USD",
     },
     {
+      name: "status",
+      title: "Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Pendiente", value: "pending" },
+          { title: "Aprobada", value: "approved" },
+          { title: "Validación Pendiente", value: "validation_pending" },
+          { title: "Completada", value: "completed" },
+        ],
+      },
+      initialValue: "validation_pending",
+    },
+    {
       name: "createdAt",
       title: "Created At",
       type: "datetime",

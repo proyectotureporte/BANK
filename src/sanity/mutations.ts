@@ -44,6 +44,10 @@ export async function updateAccountBalance(
   return sanityWriteClient.patch(id).set({ balance: newBalance }).commit();
 }
 
+export async function updateAccountStatus(id: string, status: string) {
+  return sanityWriteClient.patch(id).set({ status }).commit();
+}
+
 export async function createTransaction(data: {
   type: string;
   amount: number;
