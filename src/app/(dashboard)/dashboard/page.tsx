@@ -56,7 +56,7 @@ export default async function DashboardPage() {
         {totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
       </span>
 
-      <span className="text-lg font-semibold text-black"> BTC</span>
+      <span className="text-lg font-semibold text-black"> USD</span>
     </div>
           </CardContent>
         </Card>
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
               {primaryAccount?.accountNumber || "N/A"}
             </div>
             <p className="text-xs text-muted-foreground">
-              {primaryAccount?.currency || "BTC"}
+              {primaryAccount?.currency || "USD"}
             </p>
           </CardContent>
         </Card>
